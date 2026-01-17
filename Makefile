@@ -19,4 +19,8 @@ submission_folder: clean_submission generate_proforma
 validation: submission_folder
 	python3 validate_before_handin.py
 	mv AISearchValidationFeedback.txt $(USERNAME)
+	# Revalidate now the validation feedback is in the correct place
+	python3 validate_before_handin.py
+	mv AISearchValidationFeedback.txt $(USERNAME)
+	less $(USERNAME)/AISearchValidationFeedback.txt
 
