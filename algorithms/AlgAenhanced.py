@@ -294,7 +294,7 @@ my_last_name = "Flint"
 ############
 ############ END OF SECTOR 7 (IGNORE THIS COMMENT)
 
-algorithm_code = "IA"
+algorithm_code = "GA"
 
 ############ START OF SECTOR 8 (IGNORE THIS COMMENT)
 ############
