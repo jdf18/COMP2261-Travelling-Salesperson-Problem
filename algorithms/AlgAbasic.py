@@ -449,12 +449,13 @@ def single_point_crossover(parents):
     rand_range = 0, num_cities-1
     index = random.randint(*rand_range)
 
-    prefix1, prefix2 = p_1[:index], p_2[:index]
-    suffix1, suffix2 = p_1[index:], p_2[index:]
+    prefix1, prefix2 = p_1.tour[:index], p_2.tour[:index]
+    suffix1, suffix2 = p_1.tour[index:], p_2.tour[index:]
 
     tour1, tour2 = prefix1 + suffix2, prefix2 + suffix1
 
     def fix_tour(fixing, other):
+        other = list(other)
         res = []
         for i, e in enumerate(fixing):
             if not e in res:
@@ -493,8 +494,15 @@ def mutate(state):
         return displacement_mutation(state)
     return state
 
-add_to_population = lambda _, children, size: children[:size]
+def extend_population(population, children, *args, **kwargs):
+    population.population.extend(children)
+    return population
+
+add_to_population = extend_population
 # extend_population#_unique
+
+def reduce_population(old_pop, new_pop, size):
+    return new_pop
 
 def is_stop(population):
     return False
@@ -514,8 +522,8 @@ for i in range(max_it):
     # print(population)
     max_cost.append(len(population[-1]))
     avg_cost.append(sum(map(len, population))/len(population))
-    min_cost.append(len(population[1]))
-    # print(min_cost[-1], avg_cost[-1], max_cost[-1])
+    min_cost.append(len(population[0]))
+    print(min_cost[-1], avg_cost[-1], max_cost[-1])
     if i > 5:
         if max_cost[-1] > max_cost[-2]:
             iters_since_inprovement += 1
@@ -523,7 +531,7 @@ for i in range(max_it):
             iters_since_inprovement = 0
 
     new_population = Population([])
-    for _ in range(len(population)//2):
+    for _ in range(len(population)):
         parents = select_parents(population, 2)
         children = crossover(parents)
         children = map(mutate, children)
