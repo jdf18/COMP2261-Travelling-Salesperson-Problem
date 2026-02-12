@@ -18,6 +18,7 @@ import random
 from datetime import datetime
 
 from numpy import extract
+from numpy._typing import _SingleCodes
 
 ############ START OF SECTOR 0 (IGNORE THIS COMMENT)
 ############
@@ -360,8 +361,8 @@ added_note = ""
 random.seed(37)
 random.seed(46)
 
-pop_size = 1000
-max_it = 500
+pop_size = 2 * num_cities
+max_it = 10 * num_cities
 
 def calc_length(tour):
     length = 0
@@ -396,6 +397,7 @@ class Population:
             self.best = min(self.population, key=lambda x:x.length)
         else:
             self.best = None
+
     def __repr__(self):
         return f"Individuals:{''.join(list(map(repr, self.population)))}\nBest: {self.best}"
     
@@ -432,7 +434,7 @@ select_parents = select_parents_dist
 
 # ===== DEFINE VARIOUS CROSSOVER ALGORITHMS =====
 
-def partially_mapped_crossover(parents):
+def single_point_crossover(parents):
     p_1 = next(parents)
     p_2 = next(parents)
     try:
@@ -444,66 +446,35 @@ def partially_mapped_crossover(parents):
     else:
         assert False
 
-    # Select two random cut points
     rand_range = 0, num_cities-1
-    indices = random.randint(*rand_range), random.randint(*rand_range)
-    index_low, index_high = min(*indices), max(*indices)
+    index = random.randint(*rand_range)
 
-    # Create a mapping for the cities between the cut points
-    mapping_1 = [None for _ in range(num_cities)]
-    mapping_2 = [None for _ in range(num_cities)]
-    for i in range(index_low, index_high):
-        swap_1, swap_2 = p_1.tour[i], p_2.tour[i]
-        if swap_1 == swap_2: continue
-        mapping_1[swap_2] = swap_1
-        mapping_2[swap_1] = swap_2
+    prefix1, prefix2 = p_1[:index], p_2[:index]
+    suffix1, suffix2 = p_1[index:], p_2[index:]
 
-    # Recursively follow the mapping until it ends
-    #   Not possible for cycles to be here.
-    def item_map(mapping, city):
-        while mapping[city] != None:
-            city = mapping[city]
-        return city
-    item_map_1 = lambda c:item_map(mapping_1, c)
-    item_map_2 = lambda c:item_map(mapping_2, c)
+    tour1, tour2 = prefix1 + suffix2, prefix2 + suffix1
 
-    def cross(parents, mapping):
-        for i in range(0, num_cities):
-            if i >= index_low and i < index_high:
-                yield parents[1].tour[i]
-            else:
-                yield mapping(parents[0].tour[i])
-
-    z_1 = list(cross((p_1, p_2), item_map_1))
-    z_2 = list(cross((p_2, p_1), item_map_2))
-
-    return Individual(z_1), Individual(z_2)
+    def fix_tour(fixing, other):
+        res = []
+        for i, e in enumerate(fixing):
+            if not e in res:
+                res.append(e)
+                continue
+            x = other.pop(0)
+            while (x in fixing) or (x in res):
+                x = other.pop(0)
+            res.append(x)
+            continue
+        return res
+                
+    t1, t2 = fix_tour(tour1, tour2), fix_tour(tour2, tour1)
+    children = (Individual(t1), Individual(t2))
+    return [min(children, key=lambda x:x.length)]
 
 # Set the used parent selection algorithm
-crossover = partially_mapped_crossover
+crossover = single_point_crossover
 
 # ===== DEFINE VARIOUS MUTATION ALGORITHMS =====
-
-def alternating_position_crossover(state):
-    tour = state.tour
-    # Select two random cut points
-    rand_range = 0, num_cities-1
-    indices = random.randint(*rand_range), random.randint(*rand_range)
-    index_low, index_high = min(*indices), max(*indices)
-
-    new_position = random.randint(0, num_cities - 1 - (index_high - index_low))
-
-    subtour = tour[index_low:index_high]
-
-    if new_position > index_low:
-        new_position -= index_low
-        new_tour = tour[:index_low] + tour[index_high:index_high + new_position] 
-        new_tour += subtour + tour[index_high + new_position:]
-    else:
-        new_tour = tour[:new_position] + subtour + tour[new_position:index_low]
-        new_tour += tour[index_high:]
-
-    return Individual(new_tour)
 
 def displacement_mutation(state):
     # Select two random cut points
@@ -519,27 +490,11 @@ MUTATION_CHANCE = 0.2
 def mutate(state):
     if random.random() < MUTATION_CHANCE:
         # return displacement_mutation(state)
-        return alternating_position_crossover(state)
+        return displacement_mutation(state)
     return state
 
-ELITE = 10
-def reduce_population(old_population, new_population, size):
-    return Population(sorted(old_population.population + new_population.population)[:size])
-    return Population(old_population[:ELITE] + new_population[ELITE:size])
-
-def extend_population(population, children, *args, **kwargs):
-    population.population.extend(children)
-    return population
-
-def extend_population_unique(population, children, old_population=[]):
-    get_tour = lambda x:x.tour
-    for child in children:
-        if not child.tour in tuple(map(get_tour, old_population.population)):
-            if not child.tour in tuple(map(get_tour, population.population)):
-                population.population.append(child)
-    return population
-
-add_to_population = extend_population#_unique
+add_to_population = lambda _, children, size: children[:size]
+# extend_population#_unique
 
 def is_stop(population):
     return False
@@ -552,14 +507,20 @@ min_cost = []
 
 population = Population(generate_population(pop_size))
 
-# stop = False
-# while not stop:
-for _ in range(max_it):
+MAX_ITERS_SINCE_INPROVEMENT = max(num_cities, 50)
+iters_since_inprovement = 0
+
+for i in range(max_it):
     # print(population)
     max_cost.append(len(population[-1]))
     avg_cost.append(sum(map(len, population))/len(population))
     min_cost.append(len(population[1]))
     # print(min_cost[-1], avg_cost[-1], max_cost[-1])
+    if i > 5:
+        if max_cost[-1] > max_cost[-2]:
+            iters_since_inprovement += 1
+        else:
+            iters_since_inprovement = 0
 
     new_population = Population([])
     for _ in range(len(population)//2):
@@ -569,8 +530,9 @@ for _ in range(max_it):
         new_population = add_to_population(new_population, children, population)
     
     population = reduce_population(population, new_population, pop_size)
-    # stop = is_stop(population)
-    # stop = input("Type anything to stop:") != ""
+
+    if iters_since_inprovement > MAX_ITERS_SINCE_INPROVEMENT:
+        break
 
 max_cost.append(len(population[-1]))
 avg_cost.append(sum(map(len, population))/len(population))
@@ -580,9 +542,9 @@ state = population[0]
 tour = list(state.tour)
 tour_length = len(state)
 
-print(max_cost)
-print(avg_cost)
-print(min_cost)
+# print(max_cost)
+# print(avg_cost)
+# print(min_cost)
 
 ############ START OF SECTOR 10 (IGNORE THIS COMMENT)
 ############
