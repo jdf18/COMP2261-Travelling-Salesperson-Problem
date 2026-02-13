@@ -80,7 +80,7 @@ for file, path, hash in zip(files, filepaths, hashes):
     version_folder.mkdir()
 
     now = datetime.now() # current date and time
-    date_time = now.strftime("%Y:%d:%m:%H:%M:%S")
+    date_time = now.strftime("%Y:%m:%d:%H:%M:%S")
 
     link = folder / Path(date_time)
     link.symlink_to(version_folder.absolute())
