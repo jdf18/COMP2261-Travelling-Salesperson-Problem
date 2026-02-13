@@ -3,6 +3,6 @@ ALGORITHM CODE = GA, NAME OF CITY-FILE = AISearchfile017.txt,
 SIZE = 17, TOUR LENGTH = 1769,
 10,13,0,7,15,5,4,2,3,16,9,1,8,6,12,11,14,
 NOTE = The parameter values are 'max_it' = 170 and 'pop_size' = 34.
-RUN-TIME = 0.1 seconds.
-DATE-TIME = 12/02/2026-17:08:50.
-CERTIFICATE = 1751.
+RUN-TIME = 0.2 seconds.
+DATE-TIME = 13/02/2026-09:45:55.
+CERTIFICATE = 1759.
