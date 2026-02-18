@@ -11,7 +11,6 @@
 ############ DO NOT INCLUDE ANY COMMENTS ON A LINE WHERE YOU IMPORT A MODULE.
 ############
 
-from math import dist
 import os
 import sys
 import time

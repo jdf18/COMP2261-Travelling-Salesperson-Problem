@@ -17,9 +17,6 @@ import time
 import random
 from datetime import datetime
 
-from numpy import extract
-from numpy._typing import _SingleCodes
-
 ############ START OF SECTOR 0 (IGNORE THIS COMMENT)
 ############
 ############ NOW PLEASE SCROLL DOWN UNTIL THE NEXT BLOCK OF CAPITALIZED COMMENTS.

@@ -11,14 +11,11 @@
 ############ DO NOT INCLUDE ANY COMMENTS ON A LINE WHERE YOU IMPORT A MODULE.
 ############
 
-from itertools import accumulate
 import os
 import sys
 import time
 import random
 from datetime import datetime
-
-from numpy import extract, invert
 
 ############ START OF SECTOR 0 (IGNORE THIS COMMENT)
 ############
@@ -358,6 +355,7 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
+from itertools import accumulate
 random.seed(37)
 
 EARLY_EXIT_TIME = 55

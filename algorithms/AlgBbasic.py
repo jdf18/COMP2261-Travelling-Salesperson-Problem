@@ -11,16 +11,11 @@
 ############ DO NOT INCLUDE ANY COMMENTS ON A LINE WHERE YOU IMPORT A MODULE.
 ############
 
-from math import dist
 import os
 import sys
 import time
 import random
 from datetime import datetime
-
-from numpy import cumulative_prod
-
-from algorithms.AlgAbasic import EARLY_EXIT_TIME
 
 ############ START OF SECTOR 0 (IGNORE THIS COMMENT)
 ############
@@ -374,8 +369,6 @@ def calc_length(tour):
 from itertools import accumulate
 from bisect import bisect_left
 from math import sqrt
-
-import cProfile
 
 max_it = num_cities//5
 f = lambda x : int(x//max(1, sqrt(x/50)))
