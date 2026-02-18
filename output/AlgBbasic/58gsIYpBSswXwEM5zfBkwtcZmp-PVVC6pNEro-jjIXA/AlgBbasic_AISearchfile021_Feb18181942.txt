@@ -1,0 +1,8 @@
+USER = ssqf78 (Jacob Flint),
+ALGORITHM CODE = AC, NAME OF CITY-FILE = AISearchfile021.txt,
+SIZE = 21, TOUR LENGTH = 3064,
+3,14,19,1,15,5,17,6,9,12,16,0,20,7,11,2,4,18,13,10,8,
+NOTE = The parameter values are 'max_it' = 4 and 'num_ants' = 21.
+RUN-TIME = 0.0 seconds.
+DATE-TIME = 18/02/2026-18:19:42.
+CERTIFICATE = 1845.

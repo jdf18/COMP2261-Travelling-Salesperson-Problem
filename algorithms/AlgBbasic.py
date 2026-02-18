@@ -11,11 +11,14 @@
 ############ DO NOT INCLUDE ANY COMMENTS ON A LINE WHERE YOU IMPORT A MODULE.
 ############
 
+from math import dist
 import os
 import sys
 import time
 import random
 from datetime import datetime
+
+from numpy import cumulative_prod
 
 ############ START OF SECTOR 0 (IGNORE THIS COMMENT)
 ############
@@ -158,7 +161,7 @@ def read_in_algorithm_codes_and_tariffs(alg_codes_file):
 ############
 ############ END OF SECTOR 0 (IGNORE THIS COMMENT)
 
-input_file = "AISearchfile012.txt"
+input_file = "AISearchfile535.txt"
 
 ############ START OF SECTOR 1 (IGNORE THIS COMMENT)
 ############
@@ -294,7 +297,7 @@ my_last_name = "Flint"
 ############
 ############ END OF SECTOR 7 (IGNORE THIS COMMENT)
 
-algorithm_code = "PS"
+algorithm_code = "AC"
 
 ############ START OF SECTOR 8 (IGNORE THIS COMMENT)
 ############
@@ -355,26 +358,131 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
+def calc_length(tour):
+    length = 0
+    for i in range(0, num_cities - 1):
+        edge = dist_matrix[tour[i]][tour[i + 1]]
+        length += edge
+    length += dist_matrix[tour[num_cities - 1]][tour[0]]
+    return length
 
 
+from itertools import accumulate
+from bisect import bisect_left
+from math import sqrt
+
+import cProfile
+
+max_it = num_cities//5
+f = lambda x : int(x//max(1, sqrt(x/50)))
+num_ants = f(num_cities)
+
+alpha = 2
+beta = 4
+rho = 0.5
+
+t_0 = num_cities / sum([dist_matrix[i-1][i] for i in range(num_cities)])
+
+def inv(n):
+    if n == 0: return 0
+    return 1/n
+heuristic_matrix = tuple([tuple([inv(dist_matrix[j][i]) ** beta for i in range(num_cities)]) for j in range(num_cities)])
+pheromones_matrix = list([list([t_0 for _ in range(num_cities)]) for _ in range(num_cities)])
+
+def get_probability(current_node, node):
+    p = pheromones_matrix[current_node][node] ** alpha
+    h = heuristic_matrix[current_node][node] 
+    return p * h
+
+class Ant:
+    start_node: int
+    path: list[int]
+    univisted_cities: set[int]
+    length: int
+
+    def __init__(self) -> None:
+        self.start_node = random.randint(0, num_cities - 1)
+
+    def move_to_node(self, node):
+        self.length += dist_matrix[self.path[-1]][node]
+        self.path.append(node)
+        self.univisted_cities.remove(node)
+
+    def choose_next_node(self):
+        current_node = self.path[-1]
+
+        p = list(map(lambda x:get_probability(current_node, x), range(num_cities)))
+        for u in set(range(num_cities)) - self.univisted_cities:
+            p[u] = 0
+        probabilities = list(accumulate(p))
+        choice = random.random() * probabilities[-1]
+
+        safe_prob = probabilities.copy()
+        nums = list(range(num_cities))
+        cnt = 0
+        for i, e in enumerate(probabilities):
+            if i not in self.univisted_cities:
+                idx = i - cnt
+                safe_prob.pop(idx)
+                nums.pop(idx)
+                cnt += 1
+
+        c = bisect_left(safe_prob, choice)
+        return nums[c]
+
+    def run(self):
+        self.univisted_cities = set(range(num_cities))
+        self.univisted_cities.remove(self.start_node)
+        self.path = [self.start_node]
+        self.length = 0
+
+        while len(self.univisted_cities):
+            node = self.choose_next_node()
+            self.move_to_node(node)
+
+        self.length += dist_matrix[node][self.start_node]
+
+        return 
+
+max_cost = []
+avg_cost = []
+min_cost = []
+
+best = list(range(num_cities))
+best_len = 10**num_cities
+ants = [Ant() for _ in range(num_ants)]
+for i in range(max_it):
+    for ant in ants:
+        ant.run()
+
+    # Update pheromones
+    for i, j in zip(range(num_cities), range(num_cities)):
+        pheromones_matrix[i][j] *= 1 - rho
+
+    for ant in ants:
+        if ant.length < best_len:
+            best_len = ant.length
+            best = ant.path
+        for i in range(num_cities - 1):
+            edge = ant.path[i], ant.path[i+1]
+
+            dt = 1 / ant.length
+
+            pheromones_matrix[edge[0]][edge[1]] += dt
+    
+    ranking = tuple(map(lambda x:x.length, ants))
+    max_cost.append(ranking[-1])
+    avg_cost.append(sum(ranking)/len(ranking))
+    min_cost.append(ranking[1])
+    print(min_cost[-1], max_cost[-1])
 
 
+print(max_cost)
+print(avg_cost)
+print(min_cost)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+tour = best
+tour_length = best_len
 
 
 ############ START OF SECTOR 10 (IGNORE THIS COMMENT)

@@ -11,6 +11,7 @@
 ############ DO NOT INCLUDE ANY COMMENTS ON A LINE WHERE YOU IMPORT A MODULE.
 ############
 
+from math import dist
 import os
 import sys
 import time
@@ -158,7 +159,7 @@ def read_in_algorithm_codes_and_tariffs(alg_codes_file):
 ############
 ############ END OF SECTOR 0 (IGNORE THIS COMMENT)
 
-input_file = "AISearchfile012.txt"
+input_file = "AISearchfile535.txt"
 
 ############ START OF SECTOR 1 (IGNORE THIS COMMENT)
 ############
@@ -294,7 +295,7 @@ my_last_name = "Flint"
 ############
 ############ END OF SECTOR 7 (IGNORE THIS COMMENT)
 
-algorithm_code = "PS"
+algorithm_code = "AC"
 
 ############ START OF SECTOR 8 (IGNORE THIS COMMENT)
 ############
@@ -355,27 +356,193 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
+def calc_length(tour):
+    length = 0
+    for i in range(0, num_cities - 1):
+        edge = dist_matrix[tour[i]][tour[i + 1]]
+        length += edge
+    length += dist_matrix[tour[num_cities - 1]][tour[0]]
+    return length
+
+
+from itertools import accumulate
+from bisect import bisect_left
+from math import sqrt
+
+class SymmetricMatrix:
+    def __init__(self, mat):
+        self.dim = len(mat)
+        self.mat = mat
+
+    def __getitem__(self, key):
+        if type(key) == int:
+            return [self.mat[key][i] for i in range(self.dim)]
+        i, j = min(key), max(key)
+        return self.mat[i][j]
+    def __setitem__(self, key, val):
+        i, j = min(key), max(key)
+        self.mat[i][j] = val
+
+max_it = num_cities//3
+f = lambda x : int(x//max(1, sqrt(x/50)))
+num_ants = f(num_cities)
+
+alpha = 2
+beta = 4
+rho = 0.5
+
+t_0 = num_cities / sum([dist_matrix[i-1][i] for i in range(num_cities)])
+t_max = 10**50
+def inv(n):
+    if n == 0: return 0
+    return 1/n
+heuristic_matrix = tuple([tuple([inv(dist_matrix[j][i]) ** beta for i in range(num_cities)]) for j in range(num_cities)])
+closest_matrix = tuple([[sorted(range(num_cities), key=lambda x:dist_matrix[i][x]).index(j) for j in range(num_cities)] for i in range(num_cities)])
+
+pheromones_matrix = SymmetricMatrix(list([list([t_0 * 2 * (1/sqrt(0.5+closest_matrix[i][j])) for i in range(num_cities)]) for j in range(num_cities)]))
+
+def get_probability(current_node, node):
+    c = closest_matrix[current_node][node]
+    # if c > 25:
+        # return 0
+    p = pheromones_matrix[current_node][node] ** alpha
+    h = heuristic_matrix[current_node][node] 
+    # cv = 2 * sqrt(c+5)
+    cv=1
+    return min([p * h * cv, t_max])
 
 
 
+prob_mat = ()
+def gen_prob_mat():
+    return tuple([tuple([get_probability(i, j) for i in range(num_cities)]) for j in range(num_cities)])
+prob_mat = gen_prob_mat()
+
+def proc2opt(path, length):
+    best_diff = 0
+    best_idx = (0, 0)
+    for i in range(num_cities-1):
+        diff_i = -dist_matrix[path[i]][path[i+1]]
+        dm_i  = dist_matrix[path[i]]
+        dm_i1 = dist_matrix[path[i+1]]
+        for j in range(i+1, num_cities-1):
+            diff = diff_i - dist_matrix[path[j]][path[j+1]] + dm_i[path[j]] + dm_i1[path[j+1]]
+            if diff < best_diff:
+                best_diff = diff
+                best_idx = i, j
+
+    if best_diff != 0:
+        i, j = best_idx
+        INC, DEC = 10, 0.1
+        N = 5
+        # pheromones_matrix[path[i]][path[i+1]] *= DEC
+        # pheromones_matrix[path[j]][path[j+1]] *= DEC
+        # pheromones_matrix[path[i]][path[i+1]] = t_0
+        # pheromones_matrix[path[j]][path[j+1]] = t_0
+        # pheromones_matrix[path[i]][path[j]] *= INC
+        # pheromones_matrix[path[j+1]][path[j+1]] *= INC
+        # pheromones_matrix[path[i]][path[j]] += N/(length + best_diff)
+        # pheromones_matrix[path[j+1]][path[j+1]] += N/(length + best_diff)
+        newpath = path[:i+1] + path[j:i:-1] + path[j+1:]
+        return newpath, best_diff
+    return path, 0
+            
+
+class Ant:
+    start_node: int
+    path: list[int]
+    univisted_cities: set[int]
+    length: int
+
+    def __init__(self) -> None:
+        self.start_node = random.randint(0, num_cities - 1)
+
+    def move_to_node(self, node):
+        self.length += dist_matrix[self.path[-1]][node]
+        self.path.append(node)
+        self.univisted_cities.remove(node)
+
+    def choose_next_node(self):
+        current_node = self.path[-1]
+
+        p = list(prob_mat[current_node])
+        for u in set(range(num_cities)) - self.univisted_cities:
+            p[u] = 0
+        probabilities = tuple(accumulate(p))
+        choice = random.random() * probabilities[-1]
+
+        c = bisect_left(probabilities, choice)
+        return c
+
+    def run(self):
+        self.univisted_cities = set(range(num_cities))
+        self.univisted_cities.remove(self.start_node)
+        self.path = [self.start_node]
+        self.length = 0
+
+        while len(self.univisted_cities):
+            node = self.choose_next_node()
+            self.move_to_node(node)
+
+        self.length += dist_matrix[node][self.start_node]
+
+        return 
+
+max_cost = []
+avg_cost = []
+min_cost = []
+
+best = list(range(num_cities))
+best_len = 10**num_cities
+ants = [Ant() for _ in range(num_ants)]
+for i in range(max_it):
+    for ant in ants:
+        ant.run()
+
+    assert num_ants is not None
+    ants = sorted(ants, key=lambda x:x.length)
+    NUM_OPT = max([min([50, num_ants]), num_ants//5])
+    for ant in ants[:NUM_OPT]:
+        path, diff = proc2opt(ant.path.copy(), ant.length)
+        ant.path = path
+        ant.length += diff
+
+    # Update pheromones
+    for i, j in zip(range(num_cities), range(num_cities)):
+        pheromones_matrix[i][j] *= 1 - rho
+
+    for ant in ants:
+        if ant.length < best_len:
+            best_len = ant.length
+            best = ant.path
+            t_max = 1 / (rho * best_len)
+            t_0 = t_max / (2 * num_cities)
+        for i in range(num_cities - 1):
+            edge = ant.path[i], ant.path[i+1]
+
+            dt = 1 / ant.length
+
+            pheromones_matrix[edge[0]][edge[1]] += dt
+
+    # for i, j in zip(range(num_cities), range(num_cities)):
+    #     pheromones_matrix[i][j] = min([t_max, max([t_0, pheromones_matrix[i][j]])])
+
+    
+    prob_mat = gen_prob_mat()
+
+    ranking = tuple(map(lambda x:x.length, ants))
+    max_cost.append(ranking[-1])
+    avg_cost.append(sum(ranking)/len(ranking))
+    min_cost.append(ranking[1])
+    print(min_cost[-1], max_cost[-1])
 
 
+print(max_cost)
+print(avg_cost)
+print(min_cost)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+tour = best
+tour_length = best_len
 
 ############ START OF SECTOR 10 (IGNORE THIS COMMENT)
 ############
