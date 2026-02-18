@@ -11,13 +11,14 @@
 ############ DO NOT INCLUDE ANY COMMENTS ON A LINE WHERE YOU IMPORT A MODULE.
 ############
 
+from itertools import accumulate
 import os
 import sys
 import time
 import random
 from datetime import datetime
 
-from numpy import extract
+from numpy import extract, invert
 
 ############ START OF SECTOR 0 (IGNORE THIS COMMENT)
 ############
@@ -160,7 +161,7 @@ def read_in_algorithm_codes_and_tariffs(alg_codes_file):
 ############
 ############ END OF SECTOR 0 (IGNORE THIS COMMENT)
 
-input_file = "AISearchfile012.txt"
+input_file = "AISearchfile535.txt"
 
 ############ START OF SECTOR 1 (IGNORE THIS COMMENT)
 ############
@@ -358,7 +359,8 @@ added_note = ""
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
 random.seed(37)
-random.seed(46)
+
+EARLY_EXIT_TIME = 55
 
 pop_size = 2 * num_cities
 max_it = 10 * num_cities
@@ -374,6 +376,10 @@ def calc_length(tour):
 class Individual:
     def __init__(self, tour, length=None):
         tour = tuple(tour)
+        if tour[0] != 0:
+            idx = tour.index(0)
+            rotate = tour[idx:] + tour[:idx]
+            tour = tuple(rotate)
         self.tour = tour
         if length is None:
             length = calc_length(tour)
@@ -386,6 +392,10 @@ class Individual:
         return self.length < len(obj)
     def __repr__(self):
         return f"\n\t{self.tour} : {self.length}"
+    def __hash__(self):
+        return hash(self.tour)
+    def __eq__(self, other):
+        return self.__hash__() == hash(other)
 
 class Population:
     population = []
@@ -398,7 +408,7 @@ class Population:
             self.best = None
     def __repr__(self):
         return f"Individuals:{''.join(list(map(repr, self.population)))}\nBest: {self.best}"
-    
+
     def __iter__(self, *args, **kwargs):
         return self.population.__iter__(*args, **kwargs)
     def __getitem__(self, *args, **kwargs):
@@ -406,10 +416,22 @@ class Population:
     def __len__(self, *args, **kwargs):
         return self.population.__len__(*args, **kwargs)
 
+def generate_tour():
+    start = random.randint(0,num_cities-1)
+    tour = [start,]
+    for _ in range(num_cities-1):
+        invert = lambda x : (0 if x[0] in tour else 1/x[1])
+        possibilities = tuple(map(invert, enumerate(dist_matrix[tour[-1]])))
+        total = tuple(accumulate(possibilities))
+        p = random.random() * total[-1]
+        tour.append(bisect_left(total, p))
+    return tour
+
+
 def generate_population(size):
-    for _ in range(size):
-        t = list(range(num_cities))
-        random.shuffle(t)
+    for i in range(size):
+        print(f"{i}/{size}")
+        t = generate_tour()
         yield Individual(t, calc_length(t))
 
 # ===== DEFINE VARIOUS PARENT SELECTION ALGORITHMS =====
@@ -484,7 +506,7 @@ crossover = partially_mapped_crossover
 
 # ===== DEFINE VARIOUS MUTATION ALGORITHMS =====
 
-def alternating_position_crossover(state):
+def displacement_mutation(state):
     tour = state.tour
     # Select two random cut points
     rand_range = 0, num_cities-1
@@ -505,7 +527,7 @@ def alternating_position_crossover(state):
 
     return Individual(new_tour)
 
-def displacement_mutation(state):
+def exchange_mutation(state):
     # Select two random cut points
     rand_range = 0, num_cities-1
     index_1, index_2 = random.randint(*rand_range), random.randint(*rand_range)
@@ -517,14 +539,16 @@ def displacement_mutation(state):
 # Set the used parent selection algorithm
 MUTATION_CHANCE = 0.2
 def mutate(state):
-    if random.random() < MUTATION_CHANCE:
+    p = random.random()
+    if p < MUTATION_CHANCE:
         # return displacement_mutation(state)
-        return alternating_position_crossover(state)
+        return displacement_mutation(state)
     return state
 
 ELITE = 10
 def reduce_population(old_population, new_population, size):
-    return Population(sorted(old_population.population + new_population.population)[:size])
+    combined = set(old_population.population) | set(new_population.population)
+    return Population(sorted(combined)[:size])
     return Population(old_population[:ELITE] + new_population[ELITE:size])
 
 def extend_population(population, children, *args, **kwargs):
@@ -550,17 +574,16 @@ max_cost = []
 avg_cost = []
 min_cost = []
 
-population = Population(generate_population(pop_size))
+population = Population(generate_population(min(50, pop_size)))
 
 MAX_ITERS_SINCE_INPROVEMENT = max(num_cities, 50)
 iters_since_inprovement = 0
 
 for i in range(max_it):
-    # print(population)
     max_cost.append(len(population[-1]))
     avg_cost.append(sum(map(len, population))/len(population))
     min_cost.append(len(population[1]))
-    # print(min_cost[-1], avg_cost[-1], max_cost[-1])
+    print(min_cost[-1], round(avg_cost[-1]), max_cost[-1])
     if i > 5:
         if max_cost[-1] > max_cost[-2]:
             iters_since_inprovement += 1
@@ -577,6 +600,10 @@ for i in range(max_it):
     population = reduce_population(population, new_population, pop_size)
 
     if iters_since_inprovement > MAX_ITERS_SINCE_INPROVEMENT:
+        pop_size *= 1.5
+        MUTATION_CHANCE = 1-((1-MUTATION_CHANCE)/1.2)
+
+    if time.time() - start_time >= EARLY_EXIT_TIME:
         break
 
 max_cost.append(len(population[-1]))

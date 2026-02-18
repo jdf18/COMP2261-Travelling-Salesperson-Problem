@@ -1,0 +1,8 @@
+USER = ssqf78 (Jacob Flint),
+ALGORITHM CODE = GA, NAME OF CITY-FILE = AISearchfile048.txt,
+SIZE = 48, TOUR LENGTH = 15043,
+0,19,16,26,24,5,41,13,23,11,8,28,45,25,47,20,29,33,40,46,35,37,18,7,34,1,14,3,6,43,15,12,42,44,2,22,32,38,31,9,21,10,30,17,36,4,27,39,
+NOTE = The parameter values are 'max_it' = 480 and 'pop_size' = 96.
+RUN-TIME = 1.0 seconds.
+DATE-TIME = 18/02/2026-20:00:56.
+CERTIFICATE = 2445.

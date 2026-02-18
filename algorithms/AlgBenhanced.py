@@ -356,6 +356,8 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
+EARLY_EXIT_TIME = 55
+
 def calc_length(tour):
     length = 0
     for i in range(0, num_cities - 1):
@@ -535,6 +537,9 @@ for i in range(max_it):
     avg_cost.append(sum(ranking)/len(ranking))
     min_cost.append(ranking[1])
     print(min_cost[-1], max_cost[-1])
+
+    if time.time() - start_time >= EARLY_EXIT_TIME:
+        break
 
 
 print(max_cost)

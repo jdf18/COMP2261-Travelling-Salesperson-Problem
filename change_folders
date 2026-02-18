@@ -1,0 +1,6 @@
+#!bin/bash
+for d in *:*:*:*:*:*; do
+    IFS=':' read -r a b c d1 d2 d3 <<< "$d"
+    mv -v -- "$d" "$a:$c:$b:$d1:$d2:$d3"
+done
+

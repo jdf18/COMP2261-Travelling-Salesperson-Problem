@@ -359,7 +359,8 @@ added_note = ""
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
 random.seed(37)
-random.seed(46)
+
+EARLY_EXIT_TIME = 55
 
 pop_size = 2 * num_cities
 max_it = 10 * num_cities
@@ -477,7 +478,7 @@ crossover = single_point_crossover
 
 # ===== DEFINE VARIOUS MUTATION ALGORITHMS =====
 
-def displacement_mutation(state):
+def exchange_mutation(state):
     # Select two random cut points
     rand_range = 0, num_cities-1
     index_1, index_2 = random.randint(*rand_range), random.randint(*rand_range)
@@ -491,7 +492,7 @@ MUTATION_CHANCE = 0.2
 def mutate(state):
     if random.random() < MUTATION_CHANCE:
         # return displacement_mutation(state)
-        return displacement_mutation(state)
+        return exchange_mutation(state)
     return state
 
 def extend_population(population, children, *args, **kwargs):
@@ -515,20 +516,12 @@ min_cost = []
 
 population = Population(generate_population(pop_size))
 
-MAX_ITERS_SINCE_INPROVEMENT = max(num_cities, 50)
-iters_since_inprovement = 0
-
 for i in range(max_it):
     # print(population)
     max_cost.append(len(population[-1]))
     avg_cost.append(sum(map(len, population))/len(population))
     min_cost.append(len(population[0]))
     print(min_cost[-1], avg_cost[-1], max_cost[-1])
-    if i > 5:
-        if max_cost[-1] > max_cost[-2]:
-            iters_since_inprovement += 1
-        else:
-            iters_since_inprovement = 0
 
     new_population = Population([])
     for _ in range(len(population)):
@@ -539,7 +532,7 @@ for i in range(max_it):
     
     population = reduce_population(population, new_population, pop_size)
 
-    if iters_since_inprovement > MAX_ITERS_SINCE_INPROVEMENT:
+    if time.time() - start_time >= EARLY_EXIT_TIME:
         break
 
 max_cost.append(len(population[-1]))
