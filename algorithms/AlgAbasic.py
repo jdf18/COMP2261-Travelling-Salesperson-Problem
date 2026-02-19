@@ -357,19 +357,27 @@ added_note = ""
 
 random.seed(37)
 
+# Set the time at which the program will stop trying to improve
+#   and then return the best solution found
 EARLY_EXIT_TIME = 55
 
+# Set parameters for GA
 pop_size = 2 * num_cities
 max_it = 10 * num_cities
 
+# Function to naively compute the tour length
 def calc_length(tour):
     length = 0
+    # Loop through each of the cities in the tour, and sum their distances
     for i in range(0, num_cities - 1):
         edge = dist_matrix[tour[i]][tour[i + 1]]
         length += edge
     length += dist_matrix[tour[num_cities - 1]][tour[0]]
     return length
 
+# Create a class for each Individual in the population
+#   This allows for caching of tour lengths, and also using other magic methods
+#   allowing for comparisons and pretty printing
 class Individual:
     def __init__(self, tour, length=None):
         tour = tuple(tour)
@@ -386,6 +394,8 @@ class Individual:
     def __repr__(self):
         return f"\n\t{self.tour} : {self.length}"
 
+# Create a class to store the population
+#   This is stored as an ordered list so is quick to find the best individuals
 class Population:
     population = []
 
@@ -406,6 +416,7 @@ class Population:
     def __len__(self, *args, **kwargs):
         return self.population.__len__(*args, **kwargs)
 
+# Basic function to generate some tours to create the initial population
 def generate_population(size):
     for _ in range(size):
         t = list(range(num_cities))
@@ -413,16 +424,25 @@ def generate_population(size):
         yield Individual(t, calc_length(t))
 
 # ===== DEFINE VARIOUS PARENT SELECTION ALGORITHMS =====
-#
+
+# This creates a distribution from which parents are selected according to their rank
+
 from bisect import bisect_left
+
+# Create a constant distribution tuple that stores the accumulated probability values
+#   from the distribution
 s, N = 0, num_cities
 # s=0 - linear, s=1 - uniform
 linear_selection = lambda x : (2-s)/N + 2*(x-1)*(s-1)/N/(N-1)
-PROBABILITY_DIST = [sum(map(linear_selection, range(1, i+1))) for i in range(1, N+1)]
+PROBABILITY_DIST = tuple([sum(map(linear_selection, range(1, i+1))) for i in range(1, N+1)])
 
+# Function to setect n parents from the distribution above
 def select_parents_dist(population, n):
     for _ in range(n):
         x = random.random()
+        # Bisect left does a binary search along the list.
+        #   This is why we store the accumulated values so the time comp. can be reduced 
+        #   to O(log n) instead of O(n)
         i = bisect_left(PROBABILITY_DIST, x)
         i = min(len(population)-1, i)
         yield sorted(population)[i]
@@ -433,6 +453,7 @@ select_parents = select_parents_dist
 # ===== DEFINE VARIOUS CROSSOVER ALGORITHMS =====
 
 def single_point_crossover(parents):
+    # Get two parents from the generator
     p_1 = next(parents)
     p_2 = next(parents)
     try:
@@ -444,21 +465,28 @@ def single_point_crossover(parents):
     else:
         assert False
 
+    # Get a random index to be used in the crossover
     rand_range = 0, num_cities-1
     index = random.randint(*rand_range)
 
+    # Split each of the parents into two parents
     prefix1, prefix2 = p_1.tour[:index], p_2.tour[:index]
     suffix1, suffix2 = p_1.tour[index:], p_2.tour[index:]
 
+    # Combine the prefixes and suffixes of alternate parents
     tour1, tour2 = prefix1 + suffix2, prefix2 + suffix1
 
+    # Create a function that fixes produced tours 
     def fix_tour(fixing, other):
         other = list(other)
         res = []
         for i, e in enumerate(fixing):
+            # Check the city has not already been added
             if not e in res:
                 res.append(e)
                 continue
+            # If it has, get the next city from the other child that 
+            #   is able to be added here
             x = other.pop(0)
             while (x in fixing) or (x in res):
                 x = other.pop(0)
@@ -466,6 +494,7 @@ def single_point_crossover(parents):
             continue
         return res
                 
+    # Fix the children and return the better child
     t1, t2 = fix_tour(tour1, tour2), fix_tour(tour2, tour1)
     children = (Individual(t1), Individual(t2))
     return [min(children, key=lambda x:x.length)]
@@ -481,6 +510,7 @@ def exchange_mutation(state):
     index_1, index_2 = random.randint(*rand_range), random.randint(*rand_range)
 
     tour = list(state.tour)
+    # Swap the cities at these points
     tour[index_1], tour[index_2] = state.tour[index_2], state.tour[index_1]
     return Individual(tour)
 
@@ -488,58 +518,70 @@ def exchange_mutation(state):
 MUTATION_CHANCE = 0.2
 def mutate(state):
     if random.random() < MUTATION_CHANCE:
-        # return displacement_mutation(state)
         return exchange_mutation(state)
     return state
 
-def extend_population(population, children, *args, **kwargs):
+
+# Function that adds children to a given population
+def add_to_population(population, children, *args, **kwargs):
     population.population.extend(children)
     return population
 
-add_to_population = extend_population
-# extend_population#_unique
-
+# Function to handle combining the old and new populations
 def reduce_population(old_pop, new_pop, size):
+    # Return only the new population
     return new_pop
 
-def is_stop(population):
-    return False
-
-
-
+# Debugging information
 max_cost = []
 avg_cost = []
 min_cost = []
 
+# Create a starting population
 population = Population(generate_population(pop_size))
 
+# Store the best found individual
+best = Individual(population[0].tour)
+
 for i in range(max_it):
-    # print(population)
+    # Debugging information
     max_cost.append(len(population[-1]))
     avg_cost.append(sum(map(len, population))/len(population))
     min_cost.append(len(population[0]))
-    print(min_cost[-1], avg_cost[-1], max_cost[-1])
+    #print(min_cost[-1], avg_cost[-1], max_cost[-1])
 
+    # Create a new population of all the children
     new_population = Population([])
     for _ in range(len(population)):
+        # selecte the parents from the above distribution
         parents = select_parents(population, 2)
+        # Perform crossover
         children = crossover(parents)
+        # Mutate all the children
         children = map(mutate, children)
         new_population = add_to_population(new_population, children, population)
     
+    # Combine the population of parents and children to form the next generation
     population = reduce_population(population, new_population, pop_size)
 
+    # Update the best individual
+    if population[0] < best:
+        best = population[0]
+
+    # Check if need to exit early to finish under a minute
     if time.time() - start_time >= EARLY_EXIT_TIME:
         break
 
+# Debugging information
 max_cost.append(len(population[-1]))
 avg_cost.append(sum(map(len, population))/len(population))
 min_cost.append(len(population[1]))
 
-state = population[0]
+state = best
 tour = list(state.tour)
 tour_length = len(state)
 
+# Debugging information
 # print(max_cost)
 # print(avg_cost)
 # print(min_cost)

@@ -355,7 +355,7 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
-EARLY_EXIT_TIME = 55
+EARLY_EXIT_TIME = 50
 
 def calc_length(tour):
     length = 0
@@ -480,12 +480,16 @@ class Ant:
         self.univisted_cities.remove(self.start_node)
         self.path = [self.start_node]
         self.length = 0
+        
+        try:
+            while len(self.univisted_cities):
+                node = self.choose_next_node()
+                self.move_to_node(node)
 
-        while len(self.univisted_cities):
-            node = self.choose_next_node()
-            self.move_to_node(node)
-
-        self.length += dist_matrix[node][self.start_node]
+            self.length += dist_matrix[node][self.start_node]
+        except:
+            self.path = None
+            self.length = 10*10
 
         return 
 
@@ -504,15 +508,21 @@ for i in range(max_it):
     ants = sorted(ants, key=lambda x:x.length)
     NUM_OPT = max([min([50, num_ants]), num_ants//5])
     for ant in ants[:NUM_OPT]:
-        path, diff = proc2opt(ant.path.copy(), ant.length)
-        ant.path = path
-        ant.length += diff
+        if ant.path == None: continue
+        try:
+            path, diff = proc2opt(ant.path.copy(), ant.length)
+        except:
+            continue
+        else:
+            ant.path = path
+            ant.length += diff
 
     # Update pheromones
     for i, j in zip(range(num_cities), range(num_cities)):
         pheromones_matrix[i][j] *= 1 - rho
 
     for ant in ants:
+        if ant.path == None: continue
         if ant.length < best_len:
             best_len = ant.length
             best = ant.path

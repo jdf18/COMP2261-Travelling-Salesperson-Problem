@@ -5,6 +5,9 @@ import tokenize
 import hashlib
 from pathlib import Path
 import base64
+import sys
+
+CREATE_NEW = bool(len(sys.argv) > 2)
 
 IGNORED_TOKENS = {
     tokenize.COMMENT,
@@ -62,7 +65,8 @@ if not output_folder.exists():
 def copy(src: Path, dest: Path):
     dest.write_text(src.read_text())
 
-for file, path, hash in zip(files, filepaths, hashes):
+def process(triple):
+    file, path, hash = triple
     folder = output_folder / Path(file)
     if not folder.exists():
         folder.mkdir()
@@ -72,15 +76,18 @@ for file, path, hash in zip(files, filepaths, hashes):
         link.symlink_to(Path("alg_codes_and_tariffs.txt").absolute())
 
 
+    now = datetime.now() # current date and time
+    date_time = now.strftime("%Y:%m:%d:%H:%M:%S")
+    time = now.strftime("%H:%M:%S")
+
     version_folder = folder / Path(hash)
     if version_folder.exists():
         print(f"No changes for {file}.py")
-        continue
+        version_folder = folder/Path(f"{hash}{time}")
+        if not CREATE_NEW: return
+
     print(f"Changes for {file}.py, running code")
     version_folder.mkdir()
-
-    now = datetime.now() # current date and time
-    date_time = now.strftime("%Y:%m:%d:%H:%M:%S")
 
     link = folder / Path(date_time)
     link.symlink_to(version_folder.absolute())
@@ -88,7 +95,24 @@ for file, path, hash in zip(files, filepaths, hashes):
     script_copy = Path(version_folder/Path(file+'.py'))
     copy(path, script_copy)
 
-    for testfile in tests:
-        print(file, testfile.name)
+    # for testfile in tests:
+
+    def process_testfile(testfile):
+        # print(file, testfile.name)
         subprocess.run(["python3", str(script_copy.absolute()), testfile.name], cwd=version_folder)
+    
+    with ProcessPoolExecutor() as executor:
+        list(executor.map(process_testfile, tests))
+
+    return
+
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+
+if __name__ == "__main__":
+    tasks = zip(files, filepaths, hashes)
+    # with ThreadPoolExecutor() as executor:
+    #     results = list(executor.map(process, tasks))
+
+    for file, path, hash in zip(files, filepaths, hashes):
+        process((file, path, hash))
 

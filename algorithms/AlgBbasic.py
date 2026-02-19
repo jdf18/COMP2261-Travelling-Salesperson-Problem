@@ -355,7 +355,7 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
-EARLY_EXIT_TIME = 55
+EARLY_EXIT_TIME = 45
 
 def calc_length(tour):
     length = 0
@@ -392,10 +392,10 @@ def get_probability(current_node, node):
     return p * h
 
 class Ant:
-    start_node: int
-    path: list[int]
-    univisted_cities: set[int]
-    length: int
+    start_node = None
+    path = []
+    univisted_cities = set([])
+    length = 10**10
 
     def __init__(self) -> None:
         self.start_node = random.randint(0, num_cities - 1)
@@ -433,11 +433,15 @@ class Ant:
         self.path = [self.start_node]
         self.length = 0
 
-        while len(self.univisted_cities):
-            node = self.choose_next_node()
-            self.move_to_node(node)
+        try:
+            while len(self.univisted_cities):
+                node = self.choose_next_node()
+                self.move_to_node(node)
 
-        self.length += dist_matrix[node][self.start_node]
+            self.length += dist_matrix[node][self.start_node]
+        except:
+            self.path = None
+            self.length = 10**10
 
         return 
 
@@ -457,6 +461,7 @@ for i in range(max_it):
         pheromones_matrix[i][j] *= 1 - rho
 
     for ant in ants:
+        if ant.path == None: continue
         if ant.length < best_len:
             best_len = ant.length
             best = ant.path
