@@ -158,7 +158,7 @@ def read_in_algorithm_codes_and_tariffs(alg_codes_file):
 ############
 ############ END OF SECTOR 0 (IGNORE THIS COMMENT)
 
-input_file = "AISearchfile535.txt"
+input_file = "AISearchfile012.txt"
 
 ############ START OF SECTOR 1 (IGNORE THIS COMMENT)
 ############
@@ -355,8 +355,22 @@ added_note = ""
 ############
 ############ END OF SECTOR 9 (IGNORE THIS COMMENT)
 
+from itertools import accumulate
+from bisect import bisect_left
+from math import sqrt
+
 EARLY_EXIT_TIME = 45
 
+# Set parameters for AC
+max_it = num_cities//5
+f = lambda x : int(x//max(1, sqrt(x/50)))
+num_ants = f(num_cities)
+
+alpha = 2
+beta = 4
+rho = 0.5
+
+# Function to naively compute the tour length
 def calc_length(tour):
     length = 0
     for i in range(0, num_cities - 1):
@@ -366,31 +380,23 @@ def calc_length(tour):
     return length
 
 
-from itertools import accumulate
-from bisect import bisect_left
-from math import sqrt
-
-max_it = num_cities//5
-f = lambda x : int(x//max(1, sqrt(x/50)))
-num_ants = f(num_cities)
-
-alpha = 2
-beta = 4
-rho = 0.5
-
+# Choose an initial pheromones deposit value
 t_0 = num_cities / sum([dist_matrix[i-1][i] for i in range(num_cities)])
 
+# Precompute the heuristic_matrix fully and set the pheromone matrix initial values
 def inv(n):
     if n == 0: return 0
     return 1/n
 heuristic_matrix = tuple([tuple([inv(dist_matrix[j][i]) ** beta for i in range(num_cities)]) for j in range(num_cities)])
 pheromones_matrix = list([list([t_0 for _ in range(num_cities)]) for _ in range(num_cities)])
 
+# Function that returns the probability of going down a particular edge
 def get_probability(current_node, node):
     p = pheromones_matrix[current_node][node] ** alpha
     h = heuristic_matrix[current_node][node] 
     return p * h
 
+# Ant class that manages all routing 
 class Ant:
     start_node = None
     path = []
@@ -398,9 +404,12 @@ class Ant:
     length = 10**10
 
     def __init__(self) -> None:
+        # Choose a start node randomly
         self.start_node = random.randint(0, num_cities - 1)
 
     def move_to_node(self, node):
+        # When moving to a new node, add the distance, and append to the path,
+        #   Removing it from the list of unvisitied cities
         self.length += dist_matrix[self.path[-1]][node]
         self.path.append(node)
         self.univisted_cities.remove(node)
@@ -408,12 +417,17 @@ class Ant:
     def choose_next_node(self):
         current_node = self.path[-1]
 
+        # Get the probability of travelling to each of the nodes
         p = list(map(lambda x:get_probability(current_node, x), range(num_cities)))
+        # Set the probability of going to a node already in the tour, to 0
         for u in set(range(num_cities)) - self.univisted_cities:
             p[u] = 0
+        # Create a cumulative probability distribution
         probabilities = list(accumulate(p))
+        # Get a random variable that is in the range of the above distribution
         choice = random.random() * probabilities[-1]
 
+        # Do some magic to make sure that nodes with probability 0 are not chosen
         safe_prob = probabilities.copy()
         nums = list(range(num_cities))
         cnt = 0
@@ -424,20 +438,28 @@ class Ant:
                 nums.pop(idx)
                 cnt += 1
 
+        # Do a binary search along the cumulative probability distribution and 
+        #   return the chosen city 
         c = bisect_left(safe_prob, choice)
         return nums[c]
 
     def run(self):
+        # Initialise the length to 0
+        self.length = 0
+
+        # Set the path and unvisited cities, taking in the given start node
         self.univisted_cities = set(range(num_cities))
         self.univisted_cities.remove(self.start_node)
         self.path = [self.start_node]
-        self.length = 0
 
         try:
+            # Repeartedly choose one of the unvisited cities to travel to 
+            #   and move to it
             while len(self.univisted_cities):
                 node = self.choose_next_node()
                 self.move_to_node(node)
 
+            # Add the length as you go
             self.length += dist_matrix[node][self.start_node]
         except:
             self.path = None
@@ -445,46 +467,64 @@ class Ant:
 
         return 
 
+# Debugging information
 max_cost = []
 avg_cost = []
 min_cost = []
 
+# Store the best found tour
 best = list(range(num_cities))
 best_len = 10**num_cities
+
+# Initialise the ant colony
 ants = [Ant() for _ in range(num_ants)]
+
+prev_time = time.time()
 for i in range(max_it):
+    # Run all the ants along the graph
     for ant in ants:
         ant.run()
 
-    # Update pheromones
+    # Evaporate the pheromones
     for i, j in zip(range(num_cities), range(num_cities)):
         pheromones_matrix[i][j] *= 1 - rho
 
+    # Deposit pheromones from all the ants (and more)
     for ant in ants:
         if ant.path == None: continue
+
+        # Check to see if this is the best ant
         if ant.length < best_len:
             best_len = ant.length
             best = ant.path
+
+        # pheromone Deposit
         for i in range(num_cities - 1):
             edge = ant.path[i], ant.path[i+1]
 
             dt = 1 / ant.length
-
             pheromones_matrix[edge[0]][edge[1]] += dt
     
+    
+    # Debugging information
     ranking = tuple(map(lambda x:x.length, ants))
     max_cost.append(ranking[-1])
     avg_cost.append(sum(ranking)/len(ranking))
     min_cost.append(ranking[1])
-    print(min_cost[-1], max_cost[-1])
+    #print(min_cost[-1], max_cost[-1])
 
+    # Check if need to exit early to finish under a minute
+    current_time = time.time()
+    iteration_time = abs(current_time - prev_time)
+    prev_time = current_time
     if time.time() - start_time >= EARLY_EXIT_TIME:
         break
 
 
-print(max_cost)
-print(avg_cost)
-print(min_cost)
+# Debugging information
+#print(max_cost)
+#print(avg_cost)
+#print(min_cost)
 
 tour = best
 tour_length = best_len

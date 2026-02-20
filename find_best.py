@@ -10,6 +10,7 @@ for file in files:
 
     alg = file.name[3]
     num = file.name[22:25]
+    if not all(map(str.isdigit, num)): continue
     length = int(parts[4].split("=")[1].strip())
 
     if not alg in best.keys():

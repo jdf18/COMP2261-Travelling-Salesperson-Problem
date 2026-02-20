@@ -543,6 +543,7 @@ population = Population(generate_population(pop_size))
 # Store the best found individual
 best = Individual(population[0].tour)
 
+prev_time = time.time()
 for i in range(max_it):
     # Debugging information
     max_cost.append(len(population[-1]))
@@ -569,7 +570,10 @@ for i in range(max_it):
         best = population[0]
 
     # Check if need to exit early to finish under a minute
-    if time.time() - start_time >= EARLY_EXIT_TIME:
+    current_time = time.time()
+    iteration_time = abs(current_time - prev_time)
+    prev_time = current_time
+    if time.time() - start_time >= EARLY_EXIT_TIME - iteration_time:
         break
 
 # Debugging information

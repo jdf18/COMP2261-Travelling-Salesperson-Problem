@@ -158,7 +158,7 @@ def read_in_algorithm_codes_and_tariffs(alg_codes_file):
 ############
 ############ END OF SECTOR 0 (IGNORE THIS COMMENT)
 
-input_file = "AISearchfile535.txt"
+input_file = "AISearchfile012.txt"
 
 ############ START OF SECTOR 1 (IGNORE THIS COMMENT)
 ############
@@ -608,6 +608,7 @@ population = Population(generate_population(min(50, pop_size)))
 MAX_ITERS_SINCE_INPROVEMENT = max(num_cities, 20)
 iters_since_inprovement = 0
 
+prev_time = time.time()
 for i in range(max_it):
     # Debugging information
     max_cost.append(len(population[-1]))
@@ -640,8 +641,13 @@ for i in range(max_it):
     if iters_since_inprovement > MAX_ITERS_SINCE_INPROVEMENT:
         pop_size = int(round(pop_size * 1.5))
         MUTATION_CHANCE = min([0.6, 1-((1-MUTATION_CHANCE)/1.2)])
+        if pop_size > 11*num_cities:
+            break
 
     # Check if need to exit early to finish under a minute
+    current_time = time.time()
+    iteration_time = abs(current_time - prev_time)
+    prev_time = current_time
     if time.time() - start_time >= EARLY_EXIT_TIME:
         break
 

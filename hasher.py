@@ -95,14 +95,14 @@ def process(triple):
     script_copy = Path(version_folder/Path(file+'.py'))
     copy(path, script_copy)
 
-    # for testfile in tests:
+    for testfile in tests:
 
-    def process_testfile(testfile):
-        # print(file, testfile.name)
-        subprocess.run(["python3", str(script_copy.absolute()), testfile.name], cwd=version_folder)
+    # def process_testfile(testfile):
+        print(file, testfile.name)
+        subprocess.run(["time","python3", str(script_copy.absolute()), testfile.name], cwd=version_folder)
     
-    with ProcessPoolExecutor() as executor:
-        list(executor.map(process_testfile, tests))
+    # with ProcessPoolExecutor() as executor:
+    #     list(executor.map(process_testfile, tests))
 
     return
 

@@ -1,0 +1,482 @@
+rm -rf ssqf78
+echo "Generating proforma PDF"
+Generating proforma PDF
+soffice --headless --convert-to pdf AISearchProforma.docx --outdir export
+python3 hasher.py run them anyway
+I have found and read the input file AISearchfile012.txt:
+   the number of cities is stored in 'num_cities' and is 12
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 56!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile012_Feb19125625.txt.
+I have found and read the input file AISearchfile017.txt:
+   the number of cities is stored in 'num_cities' and is 17
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 2139!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile017_Feb19125626.txt.
+I have found and read the input file AISearchfile021.txt:
+   the number of cities is stored in 'num_cities' and is 21
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 3585!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile021_Feb19125626.txt.
+I have found and read the input file AISearchfile026.txt:
+   the number of cities is stored in 'num_cities' and is 26
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 1632!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile026_Feb19125626.txt.
+I have found and read the input file AISearchfile042.txt:
+   the number of cities is stored in 'num_cities' and is 42
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 1380!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile042_Feb19125629.txt.
+I have found and read the input file AISearchfile048.txt:
+   the number of cities is stored in 'num_cities' and is 48
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 17299!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile048_Feb19125633.txt.
+I have found and read the input file AISearchfile058.txt:
+   the number of cities is stored in 'num_cities' and is 58
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 36416!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile058_Feb19125641.txt.
+I have found and read the input file AISearchfile175.txt:
+   the number of cities is stored in 'num_cities' and is 175
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 29299!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile175_Feb19125736.txt.
+I have found and read the input file AISearchfile180.txt:
+   the number of cities is stored in 'num_cities' and is 180
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 46650!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile180_Feb19125831.txt.
+I have found and read the input file AISearchfile535.txt:
+   the number of cities is stored in 'num_cities' and is 535
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 142799!
+I have successfully written your tour to the tour file:
+   AlgAbasic_AISearchfile535_Feb19125929.txt.
+I have found and read the input file AISearchfile012.txt:
+   the number of cities is stored in 'num_cities' and is 12
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 64!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile012_Feb19125929.txt.
+I have found and read the input file AISearchfile017.txt:
+   the number of cities is stored in 'num_cities' and is 17
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 1756!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile017_Feb19125929.txt.
+I have found and read the input file AISearchfile021.txt:
+   the number of cities is stored in 'num_cities' and is 21
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 2982!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile021_Feb19125929.txt.
+I have found and read the input file AISearchfile026.txt:
+   the number of cities is stored in 'num_cities' and is 26
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 1562!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile026_Feb19125929.txt.
+I have found and read the input file AISearchfile042.txt:
+   the number of cities is stored in 'num_cities' and is 42
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 1236!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile042_Feb19125932.txt.
+I have found and read the input file AISearchfile048.txt:
+   the number of cities is stored in 'num_cities' and is 48
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 15102!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile048_Feb19125933.txt.
+I have found and read the input file AISearchfile058.txt:
+   the number of cities is stored in 'num_cities' and is 58
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 26691!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile058_Feb19125935.txt.
+I have found and read the input file AISearchfile175.txt:
+   the number of cities is stored in 'num_cities' and is 175
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 22998!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile175_Feb19130010.txt.
+I have found and read the input file AISearchfile180.txt:
+   the number of cities is stored in 'num_cities' and is 180
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 3580!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile180_Feb19130047.txt.
+I have found and read the input file AISearchfile535.txt:
+   the number of cities is stored in 'num_cities' and is 535
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is GA - genetic algorithm.
+You, user ssqf78, have successfully built a tour of length 96830!
+I have successfully written your tour to the tour file:
+   AlgAenhanced_AISearchfile535_Feb19130143.txt.
+I have found and read the input file AISearchfile012.txt:
+   the number of cities is stored in 'num_cities' and is 12
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 56!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile012_Feb19130143.txt.
+I have found and read the input file AISearchfile017.txt:
+   the number of cities is stored in 'num_cities' and is 17
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 1628!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile017_Feb19130143.txt.
+I have found and read the input file AISearchfile021.txt:
+   the number of cities is stored in 'num_cities' and is 21
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 2779!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile021_Feb19130143.txt.
+I have found and read the input file AISearchfile026.txt:
+   the number of cities is stored in 'num_cities' and is 26
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 1755!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile026_Feb19130143.txt.
+I have found and read the input file AISearchfile042.txt:
+   the number of cities is stored in 'num_cities' and is 42
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 1524!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile042_Feb19130143.txt.
+I have found and read the input file AISearchfile048.txt:
+   the number of cities is stored in 'num_cities' and is 48
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 13684!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile048_Feb19130143.txt.
+I have found and read the input file AISearchfile058.txt:
+   the number of cities is stored in 'num_cities' and is 58
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 26192!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile058_Feb19130144.txt.
+I have found and read the input file AISearchfile175.txt:
+   the number of cities is stored in 'num_cities' and is 175
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 25226!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile175_Feb19130206.txt.
+I have found and read the input file AISearchfile180.txt:
+   the number of cities is stored in 'num_cities' and is 180
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 4500!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile180_Feb19130230.txt.
+I have found and read the input file AISearchfile535.txt:
+   the number of cities is stored in 'num_cities' and is 535
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 80078!
+I have successfully written your tour to the tour file:
+   AlgBbasic_AISearchfile535_Feb19130319.txt.
+I have found and read the input file AISearchfile012.txt:
+   the number of cities is stored in 'num_cities' and is 12
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 56!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile012_Feb19130319.txt.
+I have found and read the input file AISearchfile017.txt:
+   the number of cities is stored in 'num_cities' and is 17
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 1533!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile017_Feb19130319.txt.
+I have found and read the input file AISearchfile021.txt:
+   the number of cities is stored in 'num_cities' and is 21
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 2693!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile021_Feb19130319.txt.
+I have found and read the input file AISearchfile026.txt:
+   the number of cities is stored in 'num_cities' and is 26
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 1668!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile026_Feb19130319.txt.
+I have found and read the input file AISearchfile042.txt:
+   the number of cities is stored in 'num_cities' and is 42
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 1485!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile042_Feb19130320.txt.
+I have found and read the input file AISearchfile048.txt:
+   the number of cities is stored in 'num_cities' and is 48
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 14159!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile048_Feb19130320.txt.
+I have found and read the input file AISearchfile058.txt:
+   the number of cities is stored in 'num_cities' and is 58
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 26868!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile058_Feb19130320.txt.
+I have found and read the input file AISearchfile175.txt:
+   the number of cities is stored in 'num_cities' and is 175
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 24245!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile175_Feb19130342.txt.
+I have found and read the input file AISearchfile180.txt:
+   the number of cities is stored in 'num_cities' and is 180
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 4700!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile180_Feb19130407.txt.
+I have found and read the input file AISearchfile535.txt:
+   the number of cities is stored in 'num_cities' and is 535
+   the distance matrix 'dist_matrix' has been built.
+The codes and tariffs have been read from 'alg_codes_and_tariffs.txt':
+   your algorithm code is legal and is AC - ant colony optimization.
+You, user ssqf78, have successfully built a tour of length 56703!
+I have successfully written your tour to the tour file:
+   AlgBenhanced_AISearchfile535_Feb19130502.txt.
+AlgAbasic.py:    --vR6S0a7LgYk9u2WslJqnuFovXYLvekNJLgLgXnEfo
+AlgAenhanced.py: Z_H6SC5jbsChmFXRNNC2skZLq7Xyvkr3rzzGMA6m3_c
+AlgBbasic.py:    u7PrsHrnFiWX_l2MDIvkrKutxfX5yPCOwUrxNr5SFSE
+AlgBenhanced.py: YSD7PDd5RlwnBF9wyozMYCpRKDwHm_YozYRT_kwpER4
+No changes for AlgAbasic.py
+Changes for AlgAbasic.py, running code
+AlgAbasic AISearchfile012.txt
+AlgAbasic AISearchfile017.txt
+AlgAbasic AISearchfile021.txt
+AlgAbasic AISearchfile026.txt
+AlgAbasic AISearchfile042.txt
+AlgAbasic AISearchfile048.txt
+AlgAbasic AISearchfile058.txt
+AlgAbasic AISearchfile175.txt
+AlgAbasic AISearchfile180.txt
+AlgAbasic AISearchfile535.txt
+Changes for AlgAenhanced.py, running code
+AlgAenhanced AISearchfile012.txt
+AlgAenhanced AISearchfile017.txt
+AlgAenhanced AISearchfile021.txt
+AlgAenhanced AISearchfile026.txt
+AlgAenhanced AISearchfile042.txt
+AlgAenhanced AISearchfile048.txt
+AlgAenhanced AISearchfile058.txt
+AlgAenhanced AISearchfile175.txt
+AlgAenhanced AISearchfile180.txt
+AlgAenhanced AISearchfile535.txt
+Changes for AlgBbasic.py, running code
+AlgBbasic AISearchfile012.txt
+AlgBbasic AISearchfile017.txt
+AlgBbasic AISearchfile021.txt
+AlgBbasic AISearchfile026.txt
+AlgBbasic AISearchfile042.txt
+AlgBbasic AISearchfile048.txt
+AlgBbasic AISearchfile058.txt
+AlgBbasic AISearchfile175.txt
+AlgBbasic AISearchfile180.txt
+AlgBbasic AISearchfile535.txt
+Changes for AlgBenhanced.py, running code
+AlgBenhanced AISearchfile012.txt
+AlgBenhanced AISearchfile017.txt
+AlgBenhanced AISearchfile021.txt
+AlgBenhanced AISearchfile026.txt
+AlgBenhanced AISearchfile042.txt
+AlgBenhanced AISearchfile048.txt
+AlgBenhanced AISearchfile058.txt
+AlgBenhanced AISearchfile175.txt
+AlgBenhanced AISearchfile180.txt
+AlgBenhanced AISearchfile535.txt
+rm -rf final_results/*
+python3 find_best.py
+{'B': {'ile': (PosixPath('output/AlgBenhanced/H8Z_6Nm0H_sC2diVLjkeHswDfVvhYsnFEzzW624zlbc/AlgBenhanced_AISearchfile012_Feb18184849.txt'), 56), '012': (PosixPath('output/AlgBbasic/9FnUWHCwzXkZhORHeI4FFQVF8QFXn1JPRa95YMqwWxE/AlgBbasic_AISearchfile012_Feb13163956.txt'), 56), '017': (PosixPath('output/AlgBbasic/WoKfNSvToUySP_o18UTLciSxfbnaWfyVWq4K8uspPt4/AlgBbasic_AISearchfile017_Feb18180855.txt'), 1444), '021': (PosixPath('output/AlgBbasic/9FnUWHCwzXkZhORHeI4FFQVF8QFXn1JPRa95YMqwWxE/AlgBbasic_AISearchfile021_Feb13163956.txt'), 2731), '026': (PosixPath('output/AlgBbasic/ll7T7atUmNLGC55tSmLIIALvyX12uIxJj2_cpTlNGCc/AlgBbasic_AISearchfile026_Feb18181827.txt'), 1710), '042': (PosixPath('output/AlgBbasic/WoKfNSvToUySP_o18UTLciSxfbnaWfyVWq4K8uspPt4/AlgBbasic_AISearchfile042_Feb18180856.txt'), 1470), '048': (PosixPath('output/AlgBbasic/TuUXM-tcLdIDrGZJ4KANUFyOnNEyD4RNYWwkWytsjYo/AlgBbasic_AISearchfile048_Feb18182136.txt'), 13129), '058': (PosixPath('output/AlgBbasic/u7PrsHrnFiWX_l2MDIvkrKutxfX5yPCOwUrxNr5SFSE/AlgBbasic_AISearchfile058_Feb19130144.txt'), 26192), '175': (PosixPath('output/AlgBbasic/POEudreEbQ4vDiltSlLz-HXzWw1UsIifbdLfSHm2Eoo/AlgBbasic_AISearchfile175_Feb19102819.txt'), 24712), '180': (PosixPath('output/AlgBbasic/TuUXM-tcLdIDrGZJ4KANUFyOnNEyD4RNYWwkWytsjYo/AlgBbasic_AISearchfile180_Feb18182225.txt'), 4480), '535': (PosixPath('output/AlgBbasic/TuUXM-tcLdIDrGZJ4KANUFyOnNEyD4RNYWwkWytsjYo/AlgBbasic_AISearchfile535_Feb18184849.txt'), 53991)}, 'A': {'ile': (PosixPath('output/AlgAenhanced/acjUJZkq5sCNa5EcnFdZN3EiEbSTQvm70VL1bhwc0-s/AlgAenhanced_AISearchfile012_Feb13094554.txt'), 56), '012': (PosixPath('output/AlgAbasic/A6hdlJwDOQEJdGNO-CUpFfFmJa-yWx1IK1zgTasHFxA/AlgAbasic_AISearchfile012_Jan24151328.txt'), 56), '017': (PosixPath('output/AlgAbasic/A6hdlJwDOQEJdGNO-CUpFfFmJa-yWx1IK1zgTasHFxA/AlgAbasic_AISearchfile017_Jan24151329.txt'), 1546), '021': (PosixPath('output/AlgAbasic/AgV1dAqiuG1dLICBO17lC9QM9eU--zZk915SmSgDz3Y/AlgAbasic_AISearchfile021_Jan24153005.txt'), 2795), '026': (PosixPath('output/AlgAbasic/A6hdlJwDOQEJdGNO-CUpFfFmJa-yWx1IK1zgTasHFxA/AlgAbasic_AISearchfile026_Jan24151331.txt'), 1493), '042': (PosixPath('output/AlgAbasic/0MrfWwIx7COpsT-pIR8zk_IFbH0T_XHrN-hw4ySlf9w/AlgAbasic_AISearchfile042_Jan24172201.txt'), 1243), '048': (PosixPath('output/AlgAbasic/0MrfWwIx7COpsT-pIR8zk_IFbH0T_XHrN-hw4ySlf9w/AlgAbasic_AISearchfile048_Jan24172247.txt'), 13170), '058': (PosixPath('output/AlgAbasic/0MrfWwIx7COpsT-pIR8zk_IFbH0T_XHrN-hw4ySlf9w/AlgAbasic_AISearchfile058_Jan24172334.txt'), 27641), '175': (PosixPath('output/AlgAbasic/9fMrazv_wga5Jbgk41wbF-TOGh0yev-zXwIYcHTFoQ0/AlgAbasic_AISearchfile175_Jan27123632.txt'), 23367), '180': (PosixPath('output/AlgAbasic/9fMrazv_wga5Jbgk41wbF-TOGh0yev-zXwIYcHTFoQ0/AlgAbasic_AISearchfile180_Jan27123715.txt'), 3320), '535': (PosixPath('output/AlgAbasic/9fMrazv_wga5Jbgk41wbF-TOGh0yev-zXwIYcHTFoQ0/AlgAbasic_AISearchfile535_Jan27125745.txt'), 53638)}}
+echo "Creating submission folder"
+Creating submission folder
+mkdir -p ssqf78
+cp algorithms/Alg*.py ssqf78
+cp final_results/* ssqf78
+cp export/AISearchProforma.pdf ssqf78
+python3 validate_before_handin.py
+mv AISearchValidationFeedback.txt ssqf78
+# Revalidate now the validation feedback is in the correct place
+python3 validate_before_handin.py
+mv AISearchValidationFeedback.txt ssqf78
+less ssqf78/AISearchValidationFeedback.txt
+Feedback for user-ID ssqf78 at Feb 19 13:05:02
+
+Throughout this validation, as many error messages as possible are returned in order to help you understand what might have gone wrong. However, note that sometimes a single error might lead to early termination of the validation process so that fixing this error results in more, as yet unseen, errors. So, the list of error messages might not be exhaustive but it's the best I can do!
+
+The first part of this feedback is validation of the program files that you submitted, in terms of the key information they need to contain. At this stage, the programs are not executed; that will follow later. Please note that for any program cluster, if any of the following are true then the program cluster is INVALID and neither it nor the tours it produces will secure any marks:
+ - the basic program does not exist
+ - the basic program exists but its user-name mis-matches the definitive user-name
+ - the basic program exists but its algorithm code is illegal
+ - the basic program exists but it imports an illegal module
+ - the enhanced program exists but its user-name mismatches the definitive user-name
+ - the enhanced program exists but its algorithm code mis-matches with that of the basic program
+ - the enhanced program exists but it imports an illegal module.
+Also, if you have two valid program clusters but they have the same algorithm code then both clusters are invalid. (Of course, invalidity can be avoided if you check your programs using this program prior to submission!)
+
+By the way, if you don't bother to validate prior to submission and so don't include the validation feedback in your submission then I will do absolutely nothing to fix any errors in your submission, no matter how trivial they are.
+
+#####  Program submission
+#####   * program cluster AlgA:
+#####      - AlgAbasic.py: successful validation (genetic algorithm, tariff 6)
+#####      - AlgAenhanced.py: successful validation (genetic algorithm, tariff 6)
+#####   * program cluster AlgB:
+#####      - AlgBbasic.py: successful validation (ant colony optimization, tariff 9)
+#####      - AlgBenhanced.py: successful validation (ant colony optimization, tariff 9)
+
+The next part of this feedback is validation of the tour files that you submitted. Each has been validated and the outcome is described below. If any tour has an associated error message then it is deemed to be invalid and it will secure no marks. Remember: as stated above, any tours arising from an invalid program cluster will not secure any marks (irrespective of whether they are actually legal tours or not). The tour lengths of successfully validated tours given below go to form your tour-quality mark.
+
+#####  Tour file submission
+#####   * program cluster AlgA:
+#####      - AlgA_AISearchfile012.txt: valid tour of length 56 (genetic algorithm, run-time 0.5 seconds)
+#####      - AlgA_AISearchfile017.txt: valid tour of length 1546 (genetic algorithm, run-time 0.6 seconds)
+#####      - AlgA_AISearchfile021.txt: valid tour of length 2795 (genetic algorithm, run-time 0.9 seconds)
+#####      - AlgA_AISearchfile026.txt: valid tour of length 1493 (genetic algorithm, run-time 0.7 seconds)
+#####      - AlgA_AISearchfile042.txt: valid tour of length 1243 (genetic algorithm, run-time 46.1 seconds)
+#####      - AlgA_AISearchfile048.txt: valid tour of length 13170 (genetic algorithm, run-time 45.8 seconds)
+#####      - AlgA_AISearchfile058.txt: valid tour of length 27641 (genetic algorithm, run-time 47.2 seconds)
+#####      - AlgA_AISearchfile175.txt: valid tour of length 23367 (genetic algorithm, run-time 38.2 seconds)
+#####      - AlgA_AISearchfile180.txt: valid tour of length 3320 (genetic algorithm, run-time 43.5 seconds)
+#####      - AlgA_AISearchfile535.txt: valid tour of length 53638 (genetic algorithm, run-time 1229.9 seconds)
+#####   * program cluster AlgB:
+#####      - AlgB_AISearchfile012.txt: valid tour of length 56 (ant colony optimization, run-time 0.0 seconds)
+#####      - AlgB_AISearchfile017.txt: valid tour of length 1444 (ant colony optimization, run-time 0.0 seconds)
+#####      - AlgB_AISearchfile021.txt: valid tour of length 2731 (ant colony optimization, run-time 0.0 seconds)
+#####      - AlgB_AISearchfile026.txt: valid tour of length 1710 (ant colony optimization, run-time 0.0 seconds)
+#####      - AlgB_AISearchfile042.txt: valid tour of length 1470 (ant colony optimization, run-time 0.2 seconds)
+#####      - AlgB_AISearchfile048.txt: valid tour of length 13129 (ant colony optimization, run-time 0.2 seconds)
+#####      - AlgB_AISearchfile058.txt: valid tour of length 26192 (ant colony optimization, run-time 0.4 seconds)
+#####      - AlgB_AISearchfile175.txt: valid tour of length 24712 (ant colony optimization, run-time 25.8 seconds)
+#####      - AlgB_AISearchfile180.txt: valid tour of length 4480 (ant colony optimization, run-time 24.7 seconds)
+#####      - AlgB_AISearchfile535.txt: valid tour of length 53991 (ant colony optimization, run-time 1583.7 seconds)
+
+The next part of this feedback states whether the proforma and the validation feedback were submitted.
+
+#####  Additional items submission
+#####   * AISearchProforma.pdf: submitted
+#####   * AISearchValidationFeedback.txt: submitted
+
+Of course, the validation feedback file might be flagged as 'not submitted' as it should be this file!
+
+By the way, you have extraneous material in your folder 'ssqf78' that should be removed.
+
+#####  Extraneous material:
+#####   * AlgA_AISearchfileile.txt; AlgB_AISearchfileile.txt.
+rm ssqf78.zip
+zip -r ssqf78.zip ssqf78/
+  adding: ssqf78/ (stored 0%)
+  adding: ssqf78/AlgAbasic.py (deflated 73%)
+  adding: ssqf78/AlgAenhanced.py (deflated 73%)
+  adding: ssqf78/AlgBbasic.py (deflated 73%)
+  adding: ssqf78/AlgBenhanced.py (deflated 72%)
+  adding: ssqf78/AlgA_AISearchfile012.txt (deflated 18%)
+  adding: ssqf78/AlgA_AISearchfile017.txt (deflated 19%)
+  adding: ssqf78/AlgA_AISearchfile021.txt (deflated 20%)
+  adding: ssqf78/AlgA_AISearchfile026.txt (deflated 20%)
+  adding: ssqf78/AlgA_AISearchfile042.txt (deflated 24%)
+  adding: ssqf78/AlgA_AISearchfile048.txt (deflated 24%)
+  adding: ssqf78/AlgA_AISearchfile058.txt (deflated 26%)
+  adding: ssqf78/AlgA_AISearchfile175.txt (deflated 37%)
+  adding: ssqf78/AlgA_AISearchfile180.txt (deflated 38%)
+  adding: ssqf78/AlgA_AISearchfile535.txt (deflated 46%)
+  adding: ssqf78/AlgA_AISearchfileile.txt (deflated 18%)
+  adding: ssqf78/AlgB_AISearchfile012.txt (deflated 18%)
+  adding: ssqf78/AlgB_AISearchfile017.txt (deflated 19%)
+  adding: ssqf78/AlgB_AISearchfile021.txt (deflated 20%)
+  adding: ssqf78/AlgB_AISearchfile026.txt (deflated 21%)
+  adding: ssqf78/AlgB_AISearchfile042.txt (deflated 24%)
+  adding: ssqf78/AlgB_AISearchfile048.txt (deflated 24%)
+  adding: ssqf78/AlgB_AISearchfile058.txt (deflated 25%)
+  adding: ssqf78/AlgB_AISearchfile175.txt (deflated 38%)
+  adding: ssqf78/AlgB_AISearchfile180.txt (deflated 39%)
+  adding: ssqf78/AlgB_AISearchfile535.txt (deflated 46%)
+  adding: ssqf78/AlgB_AISearchfileile.txt (deflated 19%)
+  adding: ssqf78/AISearchProforma.pdf (deflated 23%)
+  adding: ssqf78/AISearchValidationFeedback.txt (deflated 72%)

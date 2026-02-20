@@ -10,11 +10,14 @@ generate_proforma:
 	echo "Generating proforma PDF"
 	soffice --headless --convert-to pdf $(PROFORMA_NAME).docx --outdir export
 
-final_results:
+run_all:
+	python3 hasher.py run them anyway
+
+final_res: run_all
 	rm -rf final_results/*
 	python3 find_best.py
 
-submission_folder: clean_submission generate_proforma final_results
+submission_folder: clean_submission generate_proforma final_res
 	echo "Creating submission folder"
 	mkdir -p $(USERNAME)
 	cp algorithms/Alg*.py $(USERNAME)
